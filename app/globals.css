@@ -113,6 +113,28 @@ textarea:focus-visible {
   outline-offset: 3px;
 }
 
+.flodesk-consultation-form .fd-form-error:empty {
+  display: none;
+}
+
+.flodesk-consultation-form .fd-form-feedback {
+  display: none;
+}
+
+.flodesk-consultation-form .fd-form-success {
+  display: none;
+}
+
+.flodesk-consultation-form[data-ff-stage="success"] .fd-form-content,
+.flodesk-consultation-form .fd-has-success .fd-form-content {
+  display: none;
+}
+
+.flodesk-consultation-form[data-ff-stage="success"] .fd-form-success,
+.flodesk-consultation-form .fd-has-success .fd-form-success {
+  display: block;
+}
+
 .fade-up {
   animation: fade-up 620ms ease both;
 }
