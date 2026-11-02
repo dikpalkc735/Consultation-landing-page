@@ -23,6 +23,8 @@ After a successful submission, Flodesk redirects to `/thank-you` using the redir
 
 The generated Flodesk handler discovers names from `<input>` controls only. The visible message textarea is therefore mirrored into a hidden input, and Flodesk's `confirm_email_address` honeypot remains `display: none` exactly as generated so browser autofill cannot cause valid leads to be discarded as bots.
 
+The page keeps its existing Tailwind layout while using Flodesk's exact generated root class (`ff-6ae783ed710a75e6f8beb639`), configuration, field names, submit endpoint, and universal form handler. Handler initialization is guarded so React development checks cannot attach it more than once.
+
 ## Deploy to Vercel
 
 1. Push this folder to a Git repository.

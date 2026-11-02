@@ -21,7 +21,8 @@ declare global {
 }
 
 const FLODESK_FORM_ID = "6ae783ed710a75e6f8beb639";
-const FLODESK_ROOT_SELECTOR = ".flodesk-consultation-form";
+const FLODESK_ROOT_CLASS = `ff-${FLODESK_FORM_ID}`;
+const FLODESK_ROOT_SELECTOR = `.${FLODESK_ROOT_CLASS}`;
 const FLODESK_FORM_ACTION = `https://form.flodesk.com/forms/${FLODESK_FORM_ID}/submit`;
 const FLODESK_FORM_CONFIG =
   "eyJ0cmlnZ2VyIjp7Im1vZGUiOiJpbW1lZGlhdGVseSIsInZhbHVlIjowfSwib25TdWNjZXNzIjp7Im1vZGUiOiJyZWRpcmVjdCIsIm1lc3NhZ2UiOiIiLCJyZWRpcmVjdFVybCI6Imh0dHBzOi8vY29uc3VsdGF0aW9uLmRpZ2l0YWxkaWtwYWwuY29tL3RoYW5rLXlvdSJ9LCJjb2kiOnRydWUsInNob3dGb3JSZXR1cm5WaXNpdG9ycyI6dHJ1ZSwibm90aWZpY2F0aW9uIjp0cnVlLCJnZHByIjp7ImFjY2VwdHNNYXJrZXRpbmciOmZhbHNlLCJwcml2YWN5UG9saWN5Ijp7ImVuYWJsZWQiOmZhbHNlLCJtYW5kYXRvcnkiOmZhbHNlfX0sInRyYWNraW5nQ29uZmlnIjp7Im1ldGFQaXhlbElkIjoiIiwiY29va2llQmFubmVyRW5hYmxlZCI6ZmFsc2UsImdvb2dsZUFuYWx5dGljc0lkIjoiIn19";
@@ -83,6 +84,10 @@ export function CTAForm() {
   const [errors, setErrors] = useState<Errors>({});
 
   useEffect(() => {
+    const root = document.querySelector<HTMLElement>(FLODESK_ROOT_SELECTOR);
+    if (!root || root.dataset.flodeskHandlerAttached === "true") return;
+
+    root.dataset.flodeskHandlerAttached = "true";
     window.FlodeskObject = "fd";
 
     if (!window.fd) {
@@ -143,7 +148,7 @@ export function CTAForm() {
   return (
     <section
       id="book"
-      className="flodesk-consultation-form bg-brand-yellow-soft px-5 py-20 sm:px-8 sm:py-28"
+      className={`${FLODESK_ROOT_CLASS} flodesk-consultation-form bg-brand-yellow-soft px-5 py-20 sm:px-8 sm:py-28`}
       aria-labelledby="book-title"
       data-ff-el="root"
       data-ff-version="3"
