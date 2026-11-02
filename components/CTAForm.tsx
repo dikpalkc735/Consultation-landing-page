@@ -9,7 +9,6 @@ type LeadData = {
   businessName: string;
   businessUrl: string;
   message: string;
-  websiteConfirm: string;
 };
 
 type FlodeskFunction = ((...args: unknown[]) => void) & { q?: unknown[][] };
@@ -37,7 +36,6 @@ const initialValues: LeadData = {
   businessName: "",
   businessUrl: "",
   message: "",
-  websiteConfirm: "",
 };
 
 function ErrorMessage({ id, children }: { id: string; children?: string }) {
@@ -204,15 +202,13 @@ export function CTAForm() {
 
                 <div className="sm:col-span-2">
                   <label htmlFor="message" className={labelClass}>Anything You Want to Say <span aria-hidden="true">*</span></label>
-                  <textarea id="message" name="fields.anythingYouWnatToSay" rows={5} maxLength={255} placeholder="Tell me what you would like help with" value={values.message} onChange={(event) => updateField("message", event.target.value)} className={`${inputClass} resize-y`} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? "message-error" : undefined} data-ff-tab="fields.anythingYouWnatToSay:fields.websiteOrFacebookLink:submit" required />
+                  <textarea id="message" rows={5} maxLength={255} placeholder="Tell me what you would like help with" value={values.message} onChange={(event) => updateField("message", event.target.value)} className={`${inputClass} resize-y`} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? "message-error" : undefined} data-ff-tab="fields.anythingYouWnatToSay:fields.websiteOrFacebookLink:submit" required />
+                  <input type="hidden" name="fields.anythingYouWnatToSay" value={values.message} />
                   <ErrorMessage id="message-error">{errors.message}</ErrorMessage>
                 </div>
               </div>
 
-              <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
-                <label htmlFor="confirm_email_address">Leave this field empty</label>
-                <input id="confirm_email_address" name="confirm_email_address" type="text" maxLength={255} tabIndex={-1} autoComplete="off" value={values.websiteConfirm} onChange={(event) => updateField("websiteConfirm", event.target.value)} />
-              </div>
+              <input type="text" maxLength={255} name="confirm_email_address" style={{ display: "none" }} tabIndex={-1} aria-hidden="true" />
 
               <div data-ff-el="footer">
                 <button type="submit" className="primary-cta mt-8 w-full disabled:cursor-wait disabled:opacity-70" data-ff-el="submit" data-ff-tab="submit">

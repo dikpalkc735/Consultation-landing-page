@@ -21,6 +21,8 @@ The consultation form is connected directly to Flodesk form `6ae783ed710a75e6f8b
 
 After a successful submission, Flodesk redirects to `/thank-you` using the redirect configured in the supplied embed code. Segment membership and workflow automation remain controlled inside Flodesk.
 
+The generated Flodesk handler discovers names from `<input>` controls only. The visible message textarea is therefore mirrored into a hidden input, and Flodesk's `confirm_email_address` honeypot remains `display: none` exactly as generated so browser autofill cannot cause valid leads to be discarded as bots.
+
 ## Deploy to Vercel
 
 1. Push this folder to a Git repository.
