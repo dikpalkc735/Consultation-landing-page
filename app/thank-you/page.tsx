@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/Header";
-import { VIMEO_URL, WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from "@/lib/config";
+import { WHATSAPP_DISPLAY_NUMBER, WHATSAPP_MESSAGE, WHATSAPP_NUMBER, YOUTUBE_VIDEO_ID } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: "Thank You | Digital Dikpal",
@@ -10,27 +10,10 @@ export const metadata: Metadata = {
   },
 };
 
-function getVimeoEmbedUrl(url: string) {
-  if (!url.trim()) return "";
-
-  try {
-    const parsedUrl = new URL(url);
-    const match = parsedUrl.pathname.match(/\/(?:video\/)?(\d+)/);
-    if (!match) return "";
-
-    const embedUrl = new URL(`https://player.vimeo.com/video/${match[1]}`);
-    const privacyHash = parsedUrl.searchParams.get("h");
-    if (privacyHash) embedUrl.searchParams.set("h", privacyHash);
-    embedUrl.searchParams.set("app_id", "122963");
-
-    return embedUrl.toString();
-  } catch {
-    return "";
-  }
-}
-
 export default function ThankYouPage() {
-  const vimeoEmbedUrl = getVimeoEmbedUrl(VIMEO_URL);
+  const youtubeEmbedUrl = YOUTUBE_VIDEO_ID
+    ? `https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}`
+    : "";
   const whatsappNumber = WHATSAPP_NUMBER.replace(/\D/g, "");
   const whatsappUrl = whatsappNumber
     ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
@@ -63,12 +46,12 @@ export default function ThankYouPage() {
             </p>
 
             <div className="mt-6 aspect-video overflow-hidden rounded-2xl bg-brand-navy shadow-[0_18px_55px_rgba(10,16,51,0.2)]">
-              {vimeoEmbedUrl ? (
+              {youtubeEmbedUrl ? (
               <iframe
-                src={vimeoEmbedUrl}
+                src={youtubeEmbedUrl}
                 title="What happens next after requesting a consultation"
                 className="h-full w-full"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
               />
@@ -91,7 +74,7 @@ export default function ThankYouPage() {
                 Connect With Me on WhatsApp
               </h2>
               <p className="mx-auto mt-3 max-w-lg leading-7 text-body-text">
-                Send me a quick message so we can choose a convenient time for your 30-minute consultation.
+                Send me a quick message at {WHATSAPP_DISPLAY_NUMBER} so we can choose a convenient time for your 30-minute consultation.
               </p>
               <a
                 href={whatsappUrl}
@@ -102,7 +85,7 @@ export default function ThankYouPage() {
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
                   <path d="M12 2a9.84 9.84 0 0 0-8.5 14.8L2 22l5.32-1.4A9.95 9.95 0 1 0 12 2Zm0 17.95a8 8 0 0 1-4.08-1.12l-.3-.18-3.16.83.84-3.08-.2-.32A7.9 7.9 0 1 1 12 19.95Zm4.34-5.92c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.91-1.18a7.16 7.16 0 0 1-1.32-1.64c-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46a.88.88 0 0 0-.64.3c-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.1 3.62.57.25 1.02.39 1.37.5.58.18 1.1.16 1.51.1.46-.07 1.4-.58 1.6-1.13.2-.56.2-1.03.14-1.13-.06-.1-.22-.16-.46-.28Z" />
                 </svg>
-                Connect With Me on WhatsApp
+                WhatsApp {WHATSAPP_DISPLAY_NUMBER}
               </a>
             </section>
           )}
